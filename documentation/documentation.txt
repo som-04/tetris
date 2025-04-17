@@ -1,0 +1,146 @@
+Tetris Game Implementation Documentation
+=====================================
+
+Project Structure
+----------------
+The game is split into three main Python files:
+- main.py: Contains the game loop and core game logic
+- grid.py: Handles the game grid and scoring system
+- block.py: Manages Tetris blocks (pieces) and their behavior
+
+Key Technologies Used
+-------------------
+1. Pygame
+   - A Python library for creating 2D games
+   - Handles graphics, window management, and user input
+   - Key functions used:
+     * pygame.init(): Initializes all pygame modules
+     * pygame.display.set_mode(): Creates the game window
+     * pygame.time.Clock(): Manages game timing and FPS
+     * pygame.event.get(): Captures user input
+     * pygame.draw.rect(): Draws rectangles (blocks)
+
+Core Game Logic
+-------------
+1. Game Loop (main.py)
+   - Runs continuously in the following sequence:
+     a. Handle Input (check for key presses)
+     b. Update Game State (move blocks, check collisions)
+     c. Draw Screen (render everything)
+   - Maintains 60 FPS using pygame.time.Clock()
+
+2. Block Movement
+   - Blocks automatically fall based on fall_speed
+   - fall_speed = max(30, 300 - (level * 30))
+     * Starts at 300ms between moves
+     * Gets faster as level increases
+     * Never faster than 30ms between moves
+
+3. Controls
+   - Left Arrow: Move block left
+   - Right Arrow: Move block right
+   - Down Arrow: Move block down faster
+   - Up Arrow: Rotate block
+   - Space: Drop block instantly
+   - P: Pause game
+   - R: Reset game
+
+Block System (block.py)
+---------------------
+1. Block Types (7 classic Tetris pieces)
+   - I piece (long bar) - ID: 1
+   - O piece (square) - ID: 2
+   - L piece - ID: 3
+   - J piece - ID: 4
+   - S piece - ID: 5
+   - Z piece - ID: 6
+   - T piece - ID: 7
+
+2. Block Properties
+   - Each block stores:
+     * ID (1-7)
+     * Current position (row_offset, col_offset)
+     * Rotation state (0-3)
+     * Cell positions (relative to offset)
+
+3. Block Movement
+   - Checks if move is valid using can_move()
+   - Handles wall kicks during rotation
+   - Prevents moving through other blocks
+
+Grid System (grid.py)
+-------------------
+1. Grid Structure
+   - 20 rows × 10 columns
+   - Each cell stores block ID (0 = empty)
+   - Rendered as colored rectangles
+
+2. Scoring System
+   - Points awarded for completing rows:
+     * 1 row: 100 × level
+     * 2 rows: 300 × level
+     * 3 rows: 500 × level
+     * 4 rows: 800 × level
+   - Level increases every 1000 points
+
+3. Row Clearing
+   - Checks for full rows after block placement
+   - Removes full rows and shifts above rows down
+   - Updates score based on rows cleared
+
+Collision Detection
+-----------------
+1. Block-Wall Collision
+   - Checks if block position is within grid boundaries
+   - Prevents blocks from moving outside grid
+
+2. Block-Block Collision
+   - Checks if cells are empty before allowing movement
+   - Locks block in place when it can't move down
+
+3. Game Over Detection
+   - Occurs when a block locks at the top of the grid
+   - Triggered when block placement position is at row 0
+
+Graphics and UI
+-------------
+1. Colors
+   - Each block type has unique color
+   - Dark blue background
+   - White text for UI elements
+
+2. UI Elements
+   - Score display
+   - Level display
+   - Next block preview
+   - Game over message
+   - Pause indicator
+
+Game States
+----------
+1. Active Game
+   - Blocks falling
+   - Player can move/rotate blocks
+   - Score increasing
+
+2. Paused
+   - Game frozen
+   - "PAUSED" displayed
+   - No block movement
+
+3. Game Over
+   - "Game Over" displayed
+   - Only reset (R) works
+   - Blocks stop falling
+
+Tips for Learning
+---------------
+1. Start by understanding the game loop in main.py
+2. Study how blocks are represented in block.py
+3. Look at grid management in grid.py
+4. Experiment with values like fall speed and scoring
+5. Try adding new features like:
+   - High score system
+   - Different game modes
+   - Sound effects
+   - Block ghost preview
