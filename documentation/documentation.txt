@@ -133,14 +133,3 @@ Game States
    - Only reset (R) works
    - Blocks stop falling
 
-Tips for Learning
----------------
-1. Start by understanding the game loop in main.py
-2. Study how blocks are represented in block.py
-3. Look at grid management in grid.py
-4. Experiment with values like fall speed and scoring
-5. Try adding new features like:
-   - High score system
-   - Different game modes
-   - Sound effects
-   - Block ghost preview
