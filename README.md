@@ -1,1 +1,2 @@
-Just a random experiment, Ignore. o_o
+run `main.py` to play the game.
+ensure `pygame` is installed.
